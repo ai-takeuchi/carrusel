@@ -1,0 +1,109 @@
+.carrusel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 100%;
+}
+
+.sliders-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-container {
+    position: absolute;
+    display: flex;
+    left: 10px;
+    right: 10px;
+    z-index: 3;
+}
+
+.btn-container>div {
+    flex: 1;
+}
+
+.btn-container img {
+    width: 32px;
+    /* ボタンの幅 */
+    height: 32px;
+    /* ボタンの高さ */
+    cursor: pointer;
+    /* マウスを重ねたときにカーソルをポインターに変更 */
+    border: none;
+    /* 枠線をなくす */
+    background: none;
+    /* 背景をなくす */
+}
+
+.btn-container img:hover {
+    opacity: 0.7;
+    /* マウスを重ねたときの透明度 */
+}
+
+.sliders {
+    margin: 0 auto;
+    padding: 0;
+    /*
+    background-color: blueviolet;
+    */
+    width: 98%;
+    display: flex;
+    flex-wrap: nowrap;
+    list-style-type: none;
+    overflow-x: hidden;
+    justify-content: center;
+    /* 子要素の高さを揃える */
+    align-items: stretch;
+    z-index: 2;
+}
+
+.sliders li {
+    display: flex;
+    width: 300px;
+    min-width: 300px;
+    max-width: 98%;
+}
+
+.sliders li .content {
+    width: 100%;
+    word-wrap: anywhere;
+
+    /*
+    margin: 8px;
+    border: 1px solid #000;
+    padding: 8px;
+    background-color: #eee;
+    */
+}
+
+.indicators {
+    display: flex;
+    bottom: 10px;
+    justify-content: center;
+    margin: 10px 0 auto;
+    gap: 4px;
+}
+
+.indicator {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    cursor: pointer;
+}
+
+.indicator.active {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+@media screen and (max-width: 640px) {
+
+    .sliders li {
+        min-width: 98%;
+    }
+
+}
