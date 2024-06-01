@@ -16,16 +16,16 @@
 .btn-container {
     position: absolute;
     display: flex;
+    /* 要素を左右の端に配置 */
+    justify-content: space-between;
     left: 10px;
     right: 10px;
     z-index: 3;
-}
-
-.btn-container>div {
-    flex: 1;
+    pointer-events: none;
 }
 
 .btn-container img {
+    pointer-events: visible;
     width: 32px;
     /* ボタンの幅 */
     height: 32px;
@@ -36,6 +36,7 @@
     /* 枠線をなくす */
     background: none;
     /* 背景をなくす */
+    z-index: 4;
 }
 
 .btn-container img:hover {

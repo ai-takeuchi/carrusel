@@ -251,6 +251,7 @@ function carrusel(params) {
     // 逆方向のアニメーションを開始 // Start animation in reverse direction
     function animateReverseMargin() {
         if (isCarouselInViewport()) {
+            start();
             return;
         }
 
@@ -261,6 +262,7 @@ function carrusel(params) {
         lastLi = list.querySelector('li:last-child');
         // 要素の幅を取得 // Get the width of the element
         width = lastLi.offsetWidth; // 要素の幅（border と padding を含む）
+        maxWidth = width * -2;
 
         // 最後のli要素のクローンを作成 // Create a clone of the last li element
         // アニメーションの設定 // Animation settings

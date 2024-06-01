@@ -68,9 +68,29 @@ function htmlContent($atts) {
             <ul class="sliders">';
         while ($the_query->have_posts()) {
             $the_query->the_post();
-            $content = apply_filters('the_content', \get_the_content());
+
+            $backgroundPostThumbnailImageCss = '';
+            if (has_post_thumbnail()) {
+                $backgroundPostThumbnailImageCss = 'background-image:url(' . get_the_post_thumbnail_url() . ');';
+            }
+
+            // $content = apply_filters('the_content', \get_the_content());
+            /*
+            wpautop: パラグラフや改行などのHTMLタグを挿入するために使用されるフィルターです。デフォルトで有効になっており、wpautop 関数が呼び出されています。
+
+            wptexturize: テキスト内の引用符やダッシュなどの特殊文字を簡単なHTMLエンティティに変換するために使用されるフィルターです。
+
+            do_shortcode: ショートコードを展開するために使用されるフィルターです。
+
+            embed_oembed_html: oEmbedメディアを埋め込むために使用されるフィルターです。
+
+            convert_smilies: スマイリー文字列を画像に変換するために使用されるフィルターです。
+
+            shortcode_unautop: ショートコードの前後にパラグラフを自動挿入する wpautop 処理を無効にするために使用されるフィルターです。
+            */
+            $content = \get_the_content();
             $html .= '<li>
-                <div class="content">
+                <div class="content" style="' . $backgroundPostThumbnailImageCss . '">
                     <div class="post-title">' . \esc_html(\get_the_title()) . '</div>
                     <div class="post-content">' . $content . '</div>
                 </div>
@@ -79,7 +99,6 @@ function htmlContent($atts) {
         $html .= '</ul>
             <div class="btn-container">
                 <img src="' . \plugin_dir_url(__FILE__) . 'img/prev.svg" alt="Previous" class="btn prevBtn">
-                <div></div>
                 <img src="' . \plugin_dir_url(__FILE__) . 'img/next.svg" alt="Next" class="btn nextBtn">
             </div>
         </div><!-- wrap -->
