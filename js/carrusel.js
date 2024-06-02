@@ -30,9 +30,15 @@ function carrusel(params) {
     const indicatorsStyleDisplay = document.querySelector('#' + params.id + ' .indicators').style.display;
 
     if (isEven) {
+        // 真ん中の li を複製して先頭に追加して奇数個にする
+        // Duplicate the center li and add it to the beginning to make it odd
+        let lastLi = list.querySelector('li:nth-child(' + (centerIndex + 1) + ')');
+        if (!lastLi) {
         // 最後の li を複製して先頭に追加して奇数個にする
         // Duplicate the last li and add it to the beginning to make it odd
-        const lastLi = list.querySelector('li:last-child');
+            lastLi = list.querySelector('li:last-child');
+        }
+        // const lastLi = list.querySelector('li:last-child');
         const cloneLastLi = lastLi.cloneNode(true); // 複製を作成 // Create a clone
         list.insertBefore(cloneLastLi, list.firstElementChild); // 先頭に複製を追加 // Add clone to the beginning
     }
@@ -224,11 +230,7 @@ function carrusel(params) {
         clearTimeout(startTimer);
 
         // 先頭のli要素を取得 // Get the first li element
-        if (isEven) {
-            firstLi = list.querySelector('li:nth-child(2)');
-        } else {
             firstLi = list.querySelector('li:first-child');
-        }
 
         // 要素の幅を取得 // Get the width of the element
         width = firstLi.offsetWidth; // 要素の幅（border と padding を含む）
@@ -272,13 +274,7 @@ function carrusel(params) {
         cloneHeadLi = cloneEndLi.cloneNode(true); // 複製を作成 // Create a clone
 
         list.appendChild(cloneEndLi); // 末尾に追加 // Add to the end
-        if (isEven) {
-            // 2つ目に挿入 // Insert as the second element
-            const secondChild = list.children[1]; // インデックス1の子要素を取得 // Get the child element at index 1
-            list.insertBefore(cloneHeadLi, secondChild);
-        } else {
             list.insertBefore(cloneHeadLi, list.firstElementChild); // 先頭に追加 // Add to the beginning
-        }
 
         // 最後のli要素のアニメーション // Animation of the last li element
         requestAnimationFrame(reverseCloneEndLiAnimation);
