@@ -34,8 +34,8 @@ function carrusel(params) {
         // Duplicate the center li and add it to the beginning to make it odd
         let lastLi = list.querySelector('li:nth-child(' + (centerIndex + 1) + ')');
         if (!lastLi) {
-        // 最後の li を複製して先頭に追加して奇数個にする
-        // Duplicate the last li and add it to the beginning to make it odd
+            // 最後の li を複製して先頭に追加して奇数個にする
+            // Duplicate the last li and add it to the beginning to make it odd
             lastLi = list.querySelector('li:last-child');
         }
         // const lastLi = list.querySelector('li:last-child');
@@ -230,7 +230,7 @@ function carrusel(params) {
         clearTimeout(startTimer);
 
         // 先頭のli要素を取得 // Get the first li element
-            firstLi = list.querySelector('li:first-child');
+        firstLi = list.querySelector('li:first-child');
 
         // 要素の幅を取得 // Get the width of the element
         width = firstLi.offsetWidth; // 要素の幅（border と padding を含む）
@@ -274,7 +274,7 @@ function carrusel(params) {
         cloneHeadLi = cloneEndLi.cloneNode(true); // 複製を作成 // Create a clone
 
         list.appendChild(cloneEndLi); // 末尾に追加 // Add to the end
-            list.insertBefore(cloneHeadLi, list.firstElementChild); // 先頭に追加 // Add to the beginning
+        list.insertBefore(cloneHeadLi, list.firstElementChild); // 先頭に追加 // Add to the beginning
 
         // 最後のli要素のアニメーション // Animation of the last li element
         requestAnimationFrame(reverseCloneEndLiAnimation);
@@ -360,4 +360,42 @@ function carrusel(params) {
     // ドットインジケーターを生成 // Create dot indicators
     createIndicators();
     start();
+
+    // Swipe event handling
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    list.addEventListener('touchstart', (event) => {
+        touchStartX = event.changedTouches[0].screenX;
+    });
+
+    list.addEventListener('touchmove', (event) => {
+        touchEndX = event.changedTouches[0].screenX;
+    });
+
+    list.addEventListener('touchend', () => {
+        handleSwipeGesture();
+    });
+
+    function handleSwipeGesture() {
+        const swipeThreshold = 50; // Minimum swipe distance in pixels
+
+        if (touchEndX < touchStartX - swipeThreshold) {
+            // Swiped left
+            if (!animating) {
+                animationPaused = true;
+                clearTimeout(startTimer);
+                animateMargin();
+            }
+        }
+
+        if (touchEndX > touchStartX + swipeThreshold) {
+            // Swiped right
+            if (!animating) {
+                animationPaused = true;
+                clearTimeout(startTimer);
+                animateReverseMargin();
+            }
+        }
+    }
 }
