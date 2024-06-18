@@ -363,7 +363,7 @@ function carrusel(params) {
 
     // Swipe event handling
     let touchStartX = 0;
-    let touchEndX = 0;
+    let touchEndX = -1;
 
     list.addEventListener('touchstart', (event) => {
         touchStartX = event.changedTouches[0].screenX;
@@ -373,14 +373,15 @@ function carrusel(params) {
         touchEndX = event.changedTouches[0].screenX;
     });
 
-    list.addEventListener('touchend', () => {
-        handleSwipeGesture();
+    list.addEventListener('touchend', (event) => {
+        handleSwipeGesture(event);
     });
 
-    function handleSwipeGesture() {
+    function handleSwipeGesture(event) {
         const swipeThreshold = 50; // Minimum swipe distance in pixels
 
-        if (touchEndX < touchStartX - swipeThreshold) {
+        if (touchEndX != -1 && touchEndX < touchStartX - swipeThreshold) {
+            event.preventDefault();
             // Swiped left
             if (!animating) {
                 animationPaused = true;
@@ -389,7 +390,8 @@ function carrusel(params) {
             }
         }
 
-        if (touchEndX > touchStartX + swipeThreshold) {
+        if (touchEndX != -1 && touchEndX > touchStartX + swipeThreshold) {
+            event.preventDefault();
             // Swiped right
             if (!animating) {
                 animationPaused = true;
@@ -397,5 +399,8 @@ function carrusel(params) {
                 animateReverseMargin();
             }
         }
+
+        // Not swipe. tap or click.
+        touchEndX = -1; // reset
     }
 }
